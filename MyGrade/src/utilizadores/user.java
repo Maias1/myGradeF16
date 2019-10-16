@@ -76,7 +76,7 @@ public class user {
 	    //2- Email
 		for (String string : conteudo) {
 			String[] parts = string.split("#");
-			user utilizador = new user(string.toString(), "123", 0);
+			user utilizador = new user(parts[0], "123");
 			userList.add(utilizador);
 			//System.out.println(string);
 		}
