@@ -1,30 +1,40 @@
 package utilizadores;
 
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileReader;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 
 public class user {
+	static String dono = "hgaspar";
+	//static String dono = "gaandrad";
+	
+	static ArrayList<String> userNames = new ArrayList<String>();
 	static ArrayList<user> userList = new ArrayList<user>();
+	String nColaborador;
 	String nome;
+	String email;
 	String pw;
 	int myGrade;
 	String myFilePath;
 
-	public user(String user, String pw) {
-		this.nome = user;
+	public user(String nColaborador, String pw) {
+		this.nome = nColaborador;
 		this.pw = pw;
 	}
 	
-	public user(String user, String pw, int grade) {
-		this.nome = user;
+	public user(String nColaborador, String nome, String email, String pw, int grade) {
+		this.nColaborador = nColaborador;
+		this.nome = nome;
+		this.email = email;
 		this.pw = pw;
 		this.myGrade = grade;
 	}
 
-	public static boolean login(String user, String pw) {
-		user novo = new user(user, pw);
+	public static boolean login(String numero, String pw) {
+		user novo = new user(numero, pw);
 		
 		for (user registados : userList) {
 			if(novo.nome.equals(registados.nome))
@@ -35,39 +45,60 @@ public class user {
 					return false;
 				}
 			else {
-				System.out.println("Nome não consta!");
+				System.out.println("Numero errado!");
 				return false;
 			}	
 		}
 		return false;
 	}
 
-	public static void initUsers() {
-		String[] nomes = {"Maias", "Gabi", "Marcelo", "Andre"}; 
-
-		for (String string : nomes) {
+	public static ArrayList<String> initUsers() {
+		File ficheiroUsers = new File("C:\\Users\\" + dono + "\\git\\myGradeF16\\MyGrade\\usersDB.txt");
+		ArrayList<String> conteudo = new ArrayList<String>();
+		
+		StringBuilder sb = new StringBuilder();
+	    try (BufferedReader br = new BufferedReader(new FileReader(ficheiroUsers)))
+	    {
+	    	
+	        String sCurrentLine;
+	        while ((sCurrentLine = br.readLine()) != null)
+	        {
+	            sb.append(conteudo).append("\n");
+	        }
+	    }
+	    catch (IOException e)
+	    {
+	        e.printStackTrace();
+	    }
+		
+//0 numero
+	    //1 - Nome
+	    //2- Email
+		for (String string : conteudo) {
+			String[] parts = string.split("#");
 			user utilizador = new user(string.toString(), "123", 0);
 			userList.add(utilizador);
 			//System.out.println(string);
 		}
-
+		
+		for (int i = 0; i < userList.size(); i++) {
+			userNames.add(userList.get(i).getNome());
+		}
 		System.out.println("MyGrade - Users carregados!");
+		return userNames;
 	}
 
 	public static void initFiles() throws IOException {
 		
-		new File("C:\\Users\\gaandrad\\git\\myGradeF16\\users").mkdir();
-		ArrayList<String> lista = getNomes();
-		
-		for (String string : lista) {
+		new File("C:\\Users\\" + dono + "\\git\\myGradeF16\\users").mkdir();
+		for (String nColaborador : userNames) {
 			
-			new File("C:\\Users\\gaandrad\\git\\myGradeF16\\users\\" + string).mkdir();
-			File ficheiroUsers = new File("C:\\Users\\gaandrad\\git\\myGradeF16\\users\\" + string +"\\avaliacaoUsers.txt");
+			new File("C:\\Users\\" + dono + "\\git\\myGradeF16\\users\\" + nColaborador).mkdir();
+			File ficheiroUsers = new File("C:\\Users\\" + dono + "\\git\\myGradeF16\\users\\" + nColaborador +"\\avaliacaoUsers.txt");
 			
 			ficheiroUsers.createNewFile();
 			PrintWriter printW = new PrintWriter (ficheiroUsers);
-			for (String string2 : lista) {
-				
+			for (String string2 : userNames) {
 				printW.println(string2 + "-");
 			} 
 			
@@ -81,17 +112,6 @@ public class user {
 		return nome;
 	}
 
-	private static ArrayList<String> getNomes() {
-		
-		ArrayList<String> nomes = new ArrayList<String>();
-		
-		for (int i = 0; i < userList.size(); i++) {
-			
-			nomes.add(userList.get(i).getNome());
-			
-		}
-		
-		return nomes;
-	}
+
 	
 }
