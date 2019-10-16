@@ -71,7 +71,7 @@ public class user {
 				printW.println(string2 + "-");
 			} 
 			
-			printW.close();
+			printW.close( );
 		
 		}
 
