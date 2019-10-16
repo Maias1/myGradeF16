@@ -7,7 +7,9 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.io.Reader;
+import java.io.UnsupportedEncodingException;
 import java.util.Scanner;
 
 public class main {
@@ -16,6 +18,10 @@ public class main {
 
 		user.initUsers();
 		user.initFiles();
+		
+		
+		
+		
 		System.out.println("myGrade Capgemini F16 - Java 16/10/2016");
 		Scanner keyboard = new Scanner(System.in);
 		//		System.out.print("Nome de utilizador (Primeiro nome em letra minuscula):");
@@ -86,5 +92,7 @@ public class main {
 		System.out.println(sb.toString());
 		return true;
 	}
+	
+
 
 }

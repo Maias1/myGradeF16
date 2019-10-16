@@ -1,5 +1,8 @@
 package utilizadores;
 
+import java.io.File;
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 
 public class user {
@@ -51,8 +54,44 @@ public class user {
 		System.out.println("MyGrade - Users carregados!");
 	}
 
-	public static void initFiles() {
-		// TODO Auto-generated method stub
+	public static void initFiles() throws IOException {
+		
+		new File("C:\\Users\\gaandrad\\git\\myGradeF16\\users").mkdir();
+		ArrayList<String> lista = getNomes();
+		
+		for (String string : lista) {
+			
+			new File("C:\\Users\\gaandrad\\git\\myGradeF16\\users\\" + string).mkdir();
+			File ficheiroUsers = new File("C:\\Users\\gaandrad\\git\\myGradeF16\\users\\" + string +"\\avaliacaoUsers.txt");
+			
+			ficheiroUsers.createNewFile();
+			PrintWriter printW = new PrintWriter (ficheiroUsers);
+			for (String string2 : lista) {
+				
+				printW.println(string2 + "-");
+			}
+			
+			printW.close();
+		
+		}
+
 		
 	}
+	public String getNome() {
+		return nome;
+	}
+
+	private static ArrayList<String> getNomes() {
+		
+		ArrayList<String> nomes = new ArrayList<String>();
+		
+		for (int i = 0; i < userList.size(); i++) {
+			
+			nomes.add(userList.get(i).getNome());
+			
+		}
+		
+		return nomes;
+	}
+	
 }
