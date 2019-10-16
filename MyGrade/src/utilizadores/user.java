@@ -69,7 +69,7 @@ public class user {
 			for (String string2 : lista) {
 				
 				printW.println(string2 + "-");
-			}
+			} 
 			
 			printW.close();
 		
